@@ -23,14 +23,26 @@ jobs:
           npm install
           npm run webpack
 
-      - name: Sync files to another repository
-        env:
-          GITHUB_TOKEN: ${{ secrets.IMGUITS }}
-          TARGET_REPO: imgui-server
+      - name: Check out my other private repo
+        uses: actions/checkout@v4
+        with:
+          repository: bakabird/imgui-server
+          token: ${{ secrets.IMGUITS }}
+          path: imgui-server
+
+      - name: Copy www directory to imgui-server
         run: |
-          git clone https://github.com/${{ github.repository_owner }}/${{ env.TARGET_REPO }}.git target_repo
-          cp -r www target_repo/www
-          cd target_repo
+          cp -r www/* imgui-server/www
+
+      - name: Push changes to my other private repo
+        run: |
+          cd imgui-server
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
           git add www
-          git commit -m "Sync www folder"
-          git push origin main
+          if git diff --staged --quiet; then
+            echo "No changes to commit."
+          else
+            git commit -m "Update www directory"
+            git push
+          fi
