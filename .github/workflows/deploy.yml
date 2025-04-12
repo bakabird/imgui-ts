@@ -13,6 +13,13 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Check out my other private repo
+        uses: actions/checkout@v4
+        with:
+          repository: bakabird/imgui-server
+          token: ${{ secrets.IMGUITS }}
+          path: imgui-server
+
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
@@ -22,13 +29,6 @@ jobs:
         run: |
           npm install
           npm run webpack
-
-      - name: Check out my other private repo
-        uses: actions/checkout@v4
-        with:
-          repository: bakabird/imgui-server
-          token: ${{ secrets.IMGUITS }}
-          path: imgui-server
 
       - name: Copy www directory to imgui-server
         run: |
