@@ -25,7 +25,7 @@ jobs:
 
       - name: Sync files to another repository
         env:
-          GITHUB_TOKEN: ${{ secrets.IMGUI-TS }}
+          GITHUB_TOKEN: ${{ secrets.IMGUITS }}
           TARGET_REPO: imgui-server
         run: |
           git clone https://github.com/${{ github.repository_owner }}/${{ env.TARGET_REPO }}.git target_repo
