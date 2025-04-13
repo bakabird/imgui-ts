@@ -179,8 +179,8 @@ class Main {
 
 
         ImGui.End();
-        ImGui.ShowDemoWindow();
-        ImGui.ShowMetricsWindow();
+        // ImGui.ShowDemoWindow();
+        // ImGui.ShowMetricsWindow();
 
 
         ImGui.EndFrame();
