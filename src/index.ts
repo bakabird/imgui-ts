@@ -1,9 +1,12 @@
-import * as ImGui from "./imgui"
+import imgui, * as ImGui from "./imgui"
 import * as ImGui_Impl from "./imgui_impl"
+import WS from "./WS";
+
 
 export { ImGui, ImGui_Impl }
 
 export const version = "0.1.46";
+
 
 export function ImGuiObject(obj: any, id: number = 0): number {
     if (obj == null) {
@@ -94,6 +97,9 @@ class Main {
         }
 
         ImGui.Begin("Hello");
+        if (ImGui.Button("WS Connect")) {
+            WS.Me.connect()
+        }
         ImGui.Text("Version " + ImGui.VERSION);
         ImGui.InputText("Input", this.text);
         ImGui.SetNextItemWidth(-ImGui.FLT_MIN);
