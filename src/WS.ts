@@ -1,4 +1,6 @@
-import io, { Socket } from "socket.io-client";
+import Sockette from "sockette";
+
+
 
 export default class WS {
 
@@ -10,16 +12,24 @@ export default class WS {
         return this._me;
     }
 
-    private socket: Socket;
 
     constructor() {
     }
 
+
     connect() {
-        var socket = io("ws://127.0.0.1:3000/wsHtml")
-        socket.on("connect", () => {
-            socket.send("im html")
-        })
-        socket.connect()
+        const ws = new Sockette('ws://localhost:3000/wsHtml', {
+            timeout: 5e3,
+            maxAttempts: 10,
+            onopen: e => {
+                console.log('Connected!', e)
+                ws.send("Hi im html")
+            },
+            onmessage: e => console.log('Received:', e),
+            onreconnect: e => console.log('Reconnecting...', e),
+            onmaximum: e => console.log('Stop Attempting!', e),
+            onclose: e => console.log('Closed!', e),
+            onerror: e => console.log('Error:', e)
+        });
     }
 }
