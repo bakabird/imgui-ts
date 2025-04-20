@@ -1,4 +1,5 @@
 import Sockette from 'sockette';
+import WebData from './WebData';
 
 class WebSocketManager {
     private ws: Sockette;
@@ -11,8 +12,8 @@ class WebSocketManager {
             timeout: 5e3,
             maxAttempts: 10,
             onmessage: (event) => {
-                const data = JSON.parse(event.data);
-                this.messageHandlers.forEach(handler => handler(data));
+                console.log('Received message:', event.data);
+                this.messageHandlers.forEach(handler => handler(event.data));
             },
             onopen: (e: Event) => {
                 console.log('Successfully connected', e)
@@ -29,14 +30,13 @@ class WebSocketManager {
             },
             onclose: (e: Event) => {
                 console.log('Connection closed', e)
-                this.readyState === WebSocket.CLOSED
+                this.readyState = WebSocket.CLOSED;
             },
             onerror: (e: Event) => {
                 console.log('Error:', e)
-                this.readyState === WebSocket.CLOSED
+                this.readyState = WebSocket.CLOSED;
             }
         });
-        // this.ws.open()
     }
 
     setOnOpen(handler: () => void) {
@@ -47,9 +47,9 @@ class WebSocketManager {
         this.messageHandlers.push(handler);
     }
 
-    send(data: any) {
+    send(webData: WebData) {
         if (this.isConnectionOpen()) {
-            this.ws.send(JSON.stringify(data));
+            this.ws.send(webData.toJsonString());
         } else {
             console.warn('WebSocket connection is not open. Cannot send data.');
         }

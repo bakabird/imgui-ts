@@ -1,4 +1,5 @@
 import ModuleInterface from './ModuleInterface';
+import WebData from './WebData';
 
 class ModuleManager {
     private modules: ModuleInterface[] = [];
@@ -8,7 +9,7 @@ class ModuleManager {
         module.init();
     }
 
-    handleData(data: any) {
+    handleData(data: WebData) {
         this.modules.forEach(module => module.handleData(data));
     }
 

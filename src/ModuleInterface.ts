@@ -1,7 +1,9 @@
+import WebData from "./WebData";
+
 interface ModuleInterface {
     name: string;
     init(): void;
-    handleData(data: any): void;
+    handleData(data: WebData): void;
     renderUI(): void;
 }
 

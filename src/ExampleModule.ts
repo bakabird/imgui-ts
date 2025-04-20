@@ -1,5 +1,6 @@
 import ModuleInterface from './ModuleInterface';
-import imgui, * as ImGui from './imgui';
+import WebData from './WebData';
+import * as ImGui from './imgui';
 
 class ExampleModule implements ModuleInterface {
     name = 'ExampleModule';
@@ -9,10 +10,8 @@ class ExampleModule implements ModuleInterface {
         // 模块初始化逻辑
     }
 
-    handleData(data: any) {
-        if (data.exampleField) {
-            this.exampleData = data.exampleField;
-        }
+    handleData(data: WebData): void {
+        this.exampleData = data.Get("example", "defualt example"); // 处理数据逻辑..
     }
 
     renderUI() {

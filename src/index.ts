@@ -1,9 +1,10 @@
 import ExampleModule from "./ExampleModule";
+import HelloModule from "./HelloModule";
 import imgui, * as ImGui from "./imgui"
 import * as ImGui_Impl from "./imgui_impl"
 import ModuleManager from "./ModuleManager";
+import WebData from "./WebData";
 import WebSocketManager from "./WebSocketManager";
-import WS from "./WS";
 
 
 export { ImGui, ImGui_Impl }
@@ -68,7 +69,12 @@ class Main {
         this.wsMgr = new WebSocketManager("ws://127.0.0.1:3000/wsHtml")
         this.modMgr = new ModuleManager()
         this.wsMgr.addMessageHandler((data: any) => {
-            this.modMgr.handleData(data)
+            var webData = WebData.Unpack(data)
+            this.modMgr.handleData(webData)
+        })
+        this.wsMgr.setOnOpen(() => {
+            var hello = new WebData("hello", "im html")
+            this.wsMgr.send(hello)
         })
         this.RegisterModules()
     }
@@ -76,6 +82,7 @@ class Main {
     RegisterModules() {
         // 注册模块
         this.modMgr.registerModule(new ExampleModule())
+        this.modMgr.registerModule(new HelloModule())
     }
 
     ImGuiWindow(win: ImGui.Window) {
