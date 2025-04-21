@@ -1,8 +1,14 @@
 import ModuleInterface from './ModuleInterface';
 import WebData from './WebData';
+import WebSocketManager from './WebSocketManager';
 
 class ModuleManager {
     private modules: ModuleInterface[] = [];
+    private wsMgr: WebSocketManager;
+
+    constructor(wsMgr: WebSocketManager) {
+        this.wsMgr = wsMgr;
+    }
 
     registerModule(module: ModuleInterface) {
         this.modules.push(module);
@@ -14,7 +20,7 @@ class ModuleManager {
     }
 
     renderAllUI() {
-        this.modules.forEach(module => module.renderUI());
+        this.modules.forEach(module => module.renderUI(this.wsMgr));
     }
 }
 

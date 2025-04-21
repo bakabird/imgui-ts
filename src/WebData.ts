@@ -2,12 +2,15 @@ class WebData {
     private dataType: string;
     private rawData: any;
 
+    public get Type(): string { return this.dataType; }
+
     /**
      * 构造函数，初始化数据类型和原始数据
      * @param type 数据类型，字符串类型
      * @param data 原始数据，可以是任意类型，会被序列化为 JSON
      */
-    constructor(type: string, data: any) {
+    constructor(type: string, data: any,
+        public toUnity: boolean = false) {
         this.dataType = type;
         this.rawData = data;
     }
@@ -16,10 +19,11 @@ class WebData {
      * 将数据打包为包含 "type" 和 "data" 字段的对象
      * @returns 包含 "type" 和 "data" 字段的对象
      */
-    Pack(): { type: string; data: any } {
+    Pack(): { type: string; data: any, toUnity: boolean } {
         return {
             type: this.dataType,
-            data: this.rawData
+            data: this.rawData,
+            toUnity: this.toUnity,
         };
     }
 

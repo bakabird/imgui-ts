@@ -2,6 +2,7 @@ import ExampleModule from "./ExampleModule";
 import HelloModule from "./HelloModule";
 import imgui, * as ImGui from "./imgui"
 import * as ImGui_Impl from "./imgui_impl"
+import LevelViewModule from "./LevelViewModule";
 import ModuleManager from "./ModuleManager";
 import WebData from "./WebData";
 import WebSocketManager from "./WebSocketManager";
@@ -67,7 +68,7 @@ class Main {
 
     Prepar() {
         this.wsMgr = new WebSocketManager("ws://127.0.0.1:3000/wsHtml")
-        this.modMgr = new ModuleManager()
+        this.modMgr = new ModuleManager(this.wsMgr)
         this.wsMgr.addMessageHandler((data: any) => {
             var webData = WebData.Unpack(data)
             this.modMgr.handleData(webData)
@@ -83,6 +84,7 @@ class Main {
         // 注册模块
         this.modMgr.registerModule(new ExampleModule())
         this.modMgr.registerModule(new HelloModule())
+        this.modMgr.registerModule(new LevelViewModule())
     }
 
     ImGuiWindow(win: ImGui.Window) {
