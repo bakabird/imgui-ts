@@ -27,10 +27,10 @@
         "xutility": "cpp"
     },
     "workbench.colorCustomizations": {
-        "activityBar.background": "#005994",
-        "activityBar.foreground": "#d8d8d8",
-        "activityBar.inactiveForeground": "#d8d8d877",
-        "activityBarBadge.background": "#dd006f",
+        "activityBar.background": "#FBB7C0",
+        "activityBar.foreground": "#7e0774",
+        "activityBar.inactiveForeground": "#7e077477",
+        "activityBarBadge.background": "#bf0060",
         "activityBarBadge.foreground": "#e7e7e7"
     }
 }
