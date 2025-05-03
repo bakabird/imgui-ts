@@ -4,6 +4,7 @@ import imgui, * as ImGui from "./imgui"
 import * as ImGui_Impl from "./imgui_impl"
 import LevelViewModule from "./LevelViewModule";
 import ModuleManager from "./ModuleManager";
+import CommonModule from "./CommonModule";
 import WebData from "./WebData";
 import WebSocketManager from "./WebSocketManager";
 
@@ -82,9 +83,10 @@ class Main {
 
     RegisterModules() {
         // 注册模块
-        this.modMgr.registerModule(new ExampleModule())
-        this.modMgr.registerModule(new HelloModule())
+        // this.modMgr.registerModule(new ExampleModule())
+        // this.modMgr.registerModule(new HelloModule())
         this.modMgr.registerModule(new LevelViewModule())
+        this.modMgr.registerModule(new CommonModule())
     }
 
     ImGuiWindow(win: ImGui.Window) {
@@ -112,16 +114,17 @@ class Main {
             ImGui.SetNextWindowPos(new ImGui.ImVec2(0, 0));
             if (ImGui.isMobile.any())
                 ImGui.SetNextWindowSize(new ImGui.ImVec2(ImGui_Impl.canvas.scrollWidth, ImGui_Impl.canvas.scrollHeight));
-            this.first = false
         }
 
         // 创建一个新窗口
-        ImGui.Begin("My New Window"); // 开始创建名为 "My New Window" 的窗口
-        ImGui.Text("This is a sample text inside the window."); // 在窗口内添加文本
+        if (this.first)
+            ImGui.SetNextWindowSize(new ImGui.ImVec2(600, 600));
+        ImGui.Begin("Game ImGUI"); // 开始创建名为 "My New Window" 的窗口
+        // ImGui.Text("This is a sample text inside the window."); // 在窗口内添加文本
         // 可以继续添加其他 ImGui 组件，例如按钮、输入框等
-        if (ImGui.Button("Click Me")) {
-            console.log("Button clicked!");
-        }
+        // if (ImGui.Button("Click Me")) {
+        //     console.log("Button clicked!");
+        // }
 
         if (this.wsMgr.isConnectionOpen()) {
             this.loopOpen()
@@ -130,7 +133,7 @@ class Main {
             ImGui.Text("WebSocket is connecting.");
         }
 
-        ImGui.Text("Loop Open Is Over!");
+        // ImGui.Text("Loop Open Is Over!");
 
         ImGui.End(); // 结束窗口创建
 
@@ -143,6 +146,7 @@ class Main {
 
         ImGui_Impl.ClearBuffer(new ImGui.ImVec4(0.25, 0.25, 0.25, 1));
         ImGui_Impl.RenderDrawData(ImGui.GetDrawData());
+        this.first = false
     }
 
     loopOpen() {

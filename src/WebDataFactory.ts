@@ -8,4 +8,11 @@ export default class WebDataFactory {
         }, true)
     }
 
+    public static RunCommand(func: string, args: Record<string, any> = {}): WebData {
+        return new WebData("runCommand", {
+            func,
+            args,
+        }, true)
+    }
+
 }
