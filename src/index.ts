@@ -7,6 +7,7 @@ import ModuleManager from "./ModuleManager";
 import CommonModule from "./CommonModule";
 import WebData from "./WebData";
 import WebSocketManager from "./WebSocketManager";
+import ConsoleModule from "./ConsoleModule";
 
 
 export { ImGui, ImGui_Impl }
@@ -87,6 +88,7 @@ class Main {
         // this.modMgr.registerModule(new HelloModule())
         this.modMgr.registerModule(new LevelViewModule())
         this.modMgr.registerModule(new CommonModule())
+        this.modMgr.registerModule(new ConsoleModule())
     }
 
     ImGuiWindow(win: ImGui.Window) {
