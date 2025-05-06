@@ -86,9 +86,9 @@ class Main {
         // 注册模块
         // this.modMgr.registerModule(new ExampleModule())
         // this.modMgr.registerModule(new HelloModule())
+        this.modMgr.registerModule(new ConsoleModule())
         this.modMgr.registerModule(new LevelViewModule())
         this.modMgr.registerModule(new CommonModule())
-        this.modMgr.registerModule(new ConsoleModule())
     }
 
     ImGuiWindow(win: ImGui.Window) {
@@ -116,11 +116,10 @@ class Main {
             ImGui.SetNextWindowPos(new ImGui.ImVec2(0, 0));
             if (ImGui.isMobile.any())
                 ImGui.SetNextWindowSize(new ImGui.ImVec2(ImGui_Impl.canvas.scrollWidth, ImGui_Impl.canvas.scrollHeight));
+            else
+                ImGui.SetNextWindowSize(new ImGui.ImVec2(600, 500));
         }
 
-        // 创建一个新窗口
-        if (this.first)
-            ImGui.SetNextWindowSize(new ImGui.ImVec2(600, 600));
         ImGui.Begin("Game ImGUI"); // 开始创建名为 "My New Window" 的窗口
         // ImGui.Text("This is a sample text inside the window."); // 在窗口内添加文本
         // 可以继续添加其他 ImGui 组件，例如按钮、输入框等

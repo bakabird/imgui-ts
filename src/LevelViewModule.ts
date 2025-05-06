@@ -7,7 +7,6 @@ import * as ImGui from './imgui';
 export default class LevelViewModule implements ModuleInterface {
     name = 'LevelViewModule';
 
-    private stable: boolean = false
     private isOpen: boolean = false;
     // For Render
     private root: any;
@@ -17,11 +16,10 @@ export default class LevelViewModule implements ModuleInterface {
     }
 
     handleData(data: WebData): void {
-        if (data.Type == "levelView") {
-            if (!this.stable) {
-                this.isOpen = true
-                this.stable = true
-            }
+        if (data.Type == "funcStateSync") {
+            this.isOpen = data.Get("LevelView")
+        }
+        else if (data.Type == "levelView") {
             var root = data.Get("Root");
             this.root = root
         }
