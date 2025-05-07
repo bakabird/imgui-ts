@@ -15,4 +15,9 @@ export default class WebDataFactory {
         }, true)
     }
 
+
+    public static PullLogs(): WebData {
+        return new WebData("pullLogs", "", true)
+    }
+
 }

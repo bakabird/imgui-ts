@@ -43,14 +43,30 @@ export default class ConsoleModule implements ModuleInterface {
                     ImGui.SetWindowSize(this.name, new ImGui.Vec2(600, 300));
                     // 设置位置
                     ImGui.SetWindowPos(this.name, new ImGui.Vec2(0, 500));
+                    wsMgr.send(WebDataFactory.PullLogs());
                     this.isFirstOpen = false;
                 }
+                // 日志和输入框垂直布局；并且输入框贴底，其余空间给日志；且需要自适应窗口变化
+                // 获取当前窗口的可用区域
+                const availRegion = ImGui.GetContentRegionAvail();
+                // 计算输入框的高度，这里假设输入框高度为 25 像素
+                const inputHeight = 25;
+                // 计算日志区域的高度
+                const logHeight = availRegion.y - inputHeight;
+
                 // 显示日志
-                // ImGui.BeginChild("ConsoleLog");
+                ImGui.BeginChild("ConsoleLog", new ImGui.Vec2(0, logHeight), true);
                 for (const log of this.logs) {
                     ImGui.Text(log);
                 }
-                // ImGui.EndChild();
+                ImGui.EndChild();
+
+                // 模拟 ImGui::InputText 函数调用
+                var strBuffer = new ImGui.ImStringBuffer(100);
+                ImGui.InputText("", strBuffer, 128);
+                // 模拟在同一行显示内容
+                ImGui.SameLine();
+
                 ImGui.End();
             }
         } else {
